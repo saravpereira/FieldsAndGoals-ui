@@ -1,30 +1,28 @@
 import React, { useEffect } from 'react';
+import jwt_decode from 'jwt-decode';
 
 function App() {
-  const googleClientId = "141115154444-ffidu0bon5vvv7e1r0r0p0tqsj0oisq2.apps.googleusercontent.com"; // Replace with your Google Client ID
+  function handleCallbackResponse(response) {
+    console.log(response.credential);
+    var userObject = jwt_decode(response.credential);
+    console.log(userObject);
+  }
 
   useEffect(() => {
-    window.gapi.load('auth2', () => {
-      window.gapi.auth2.init({
-        client_id: googleClientId
-      });
+    google.accounts.id.initialize({
+        client_id: "141115154444-ffidu0bon5vvv7e1r0r0p0tqsj0oisq2.apps.googleusercontent.com",
+        callback: handleCallbackResponse,
     });
-  }, []);
 
-  const handleLogin = () => {
-    const auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signIn().then(googleUser => {
-      const profile = googleUser.getBasicProfile();
-      console.log('ID: ' + profile.getId());
-      console.log('Name: ' + profile.getName());
-      console.log('Image URL: ' + profile.getImageUrl());
-      console.log('Email: ' + profile.getEmail());
-    });
-  };
+    google.accounts.id.renderButton(
+        document.getElementById("signInDiv"),
+        { theme: "outline", size: "large" }
+    );
+  }, []);
 
   return (
     <div className="App">
-      <button onClick={handleLogin}>Login with Google</button>
+      <div id="signInDiv"></div>
     </div>
   );
 }

@@ -12,11 +12,11 @@ const Login = () => {
   const [showSignIn, setShowSignIn] = useState(true);
 
   useEffect(() => {
-    Parse.initialize("parse");
-    Parse.serverURL = 'https://api.fieldsandgoals.com/parse';
+    Parse.initialize(process.env.REACT_APP_PARSE_APP_ID);   // Use environment variable for Parse App ID
+    Parse.serverURL = process.env.REACT_APP_SERVER_URL;    // Use environment variable for server URL
 
     google.accounts.id.initialize({
-        client_id: "141115154444-ffidu0bon5vvv7e1r0r0p0tqsj0oisq2.apps.googleusercontent.com",
+        client_id: process.env.REACT_APP_CLIENT_ID,        // Use environment variable for client ID
         callback: handleCallbackResponse,
     });
 

@@ -32,25 +32,31 @@ export const logoutThunk = createAsyncThunk('user/logout', async (_, { dispatch 
     dispatch(resetUser());
 });
 
+const initialState = {
+    auth: {}
+};
+
 const userSlice = createSlice({
     name: 'userReducer',
-    initialState: {auth: {}},
+    initialState: {...initialState},
     reducers: {
-      setUser: (state, action) => {
-        return action.payload;
-      },
-      resetUser: () => {
-        return {};
-      }
+        setUser: (state, action) => {
+            return {
+                ...state,
+                auth: action.payload
+            };
+        },
+        resetUser: () => {
+            return {...initialState};
+        }
     },
     extraReducers: (builder) => {
-      builder
-        .addCase(logoutThunk.rejected, (state, action) => {
-          toast.error('Error logging out.');
-        });
+        builder
+            .addCase(logoutThunk.rejected, (state, action) => {
+                toast.error('Error logging out.');
+            });
     }
-  });
-  
+});
 
 export const { setUser, resetUser } = userSlice.actions;
 export default userSlice.reducer;

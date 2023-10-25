@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// Other 3rd party libraries
 import jwt_decode from 'jwt-decode';
 import Parse from 'parse';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';  // Add this import for styling
+import 'react-toastify/dist/ReactToastify.css';
 
-// Local imports
 import { setUser, resetUser } from '../redux/user/userActions';
 import { selectUser } from '../redux/user/userSelectors';
 
@@ -26,11 +24,11 @@ const Login = () => {
   }
 
   useEffect(() => {
-    Parse.initialize(process.env.REACT_APP_PARSE_APP_ID);   // Use environment variable for Parse App ID
-    Parse.serverURL = process.env.REACT_APP_SERVER_URL;    // Use environment variable for server URL
+    Parse.initialize(process.env.REACT_APP_PARSE_APP_ID);
+    Parse.serverURL = process.env.REACT_APP_SERVER_URL;
 
     google.accounts.id.initialize({
-        client_id: process.env.REACT_APP_CLIENT_ID,        // Use environment variable for client ID
+        client_id: process.env.REACT_APP_CLIENT_ID,
         callback: handleCallbackResponse,
     });
 
@@ -43,7 +41,7 @@ const Login = () => {
     setShowSignIn(false);
     Parse.User.logInWith('google', { authData: { id: userObject.sub, access_token: response.credential } })
       .catch(error => {
-        toast.error('Error logging in through Google.');  // Notify user of error
+        toast.error('Error logging in through Google.');
       });
   }
 
@@ -54,7 +52,7 @@ const Login = () => {
         setShowSignIn(true);
       })
       .catch(error => {
-        toast.error('Error logging out.');  // Notify user of error
+        toast.error('Error logging out.');
       });
   }
 

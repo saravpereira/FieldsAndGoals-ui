@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { initializeGoogleLoginThunk, logoutThunk } from '../redux/user/userReducer';
-import { selectUser } from '../redux/user/userSelectors';
+import { initializeGoogleLoginThunk, logoutThunk } from '../../redux/user/userReducer';
+import { selectUser } from '../../redux/user/userSelectors';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const Login = () => {
 
     return (
         <div>
-            { user && user.name ? (
+            { user?.name ? (
                 <>
                     <button onClick={() => dispatch(logoutThunk())}>Sign Out</button>
                     <div>
@@ -30,7 +30,7 @@ const Login = () => {
             )}
             <ToastContainer />
         </div>
-    );
+    );    
 }
 
 export default Login;

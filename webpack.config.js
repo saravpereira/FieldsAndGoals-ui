@@ -1,5 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = {
   output: {
@@ -9,6 +11,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "src/index.html", // to import index.html file inside index.js
+    }),
+    new webpack.DefinePlugin({
+        'process.env.REACT_APP_PARSE_APP_ID': JSON.stringify(process.env.REACT_APP_PARSE_APP_ID),
+        'process.env.REACT_APP_SERVER_URL': JSON.stringify(process.env.REACT_APP_SERVER_URL),
+        'process.env.REACT_APP_CLIENT_ID': JSON.stringify(process.env.REACT_APP_CLIENT_ID)
     }),
   ],
   devServer: {

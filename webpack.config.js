@@ -13,10 +13,10 @@ module.exports = {
       template: "src/index.html", // to import index.html file inside index.js
     }),
     new webpack.DefinePlugin({
-        'process.env.REACT_APP_PARSE_APP_ID': JSON.stringify(process.env.REACT_APP_PARSE_APP_ID),
-        'process.env.REACT_APP_SERVER_URL': JSON.stringify(process.env.REACT_APP_SERVER_URL),
-        'process.env.REACT_APP_CLIENT_ID': JSON.stringify(process.env.REACT_APP_CLIENT_ID)
-    }),
+        'REACT_APP_PARSE_APP_ID': JSON.stringify(process.env.REACT_APP_PARSE_APP_ID),
+        'REACT_APP_SERVER_URL': JSON.stringify(process.env.REACT_APP_SERVER_URL),
+        'REACT_APP_JAVASCRIPT_KEY': JSON.stringify(process.env.REACT_APP_JAVASCRIPT_KEY),
+      }),
   ],
   devServer: {
     port: 3030, // you can change the port

@@ -1,53 +1,59 @@
-import React, { Fragment } from "react";
-import { Form, Button } from "react-bootstrap";
-
+import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { TextField, Button, Typography, Box } from "@material-ui/core";
+import styles from './Home.module.css';
 
 import { loginGoogle } from "../redux/actions/auth";
 
 const Home = ({ loginGoogle, oauth }) => {
+  useEffect(() => {
+    if (oauth) {
+      window.location.href = oauth;
+    }
+  }, [oauth]);
+
   const handleGoogleSignIn = () => {
     loginGoogle();
   };
 
-  if (oauth) {
-    window.location.href = oauth;
-  }
-
   return (
     <Fragment>
-      <div className='container'>
-        <div className='display-1 text-primary mb-3 text-center'>
-          Login Page
-        </div>
-        <div className='row align-items-center justify-content-center'>
-          <div className='col-6'>
-            <Form>
-              <Form.Group>
-                <Form.Control
-                  type='email'
-                  name='email'
-                  placeholder='Email'
-                  className='my-2'
-                ></Form.Control>
-                <Form.Control
-                  type='password'
-                  name='password'
-                  placeholder='Password'
-                  className='my-2'
-                ></Form.Control>
-              </Form.Group>
-              <Button className='btn-block mb-3'>Login</Button>
-            </Form>
-            <Button
-              className='btn-danger btn-block'
-              onClick={handleGoogleSignIn}
-            >
-              Sign In with Google
+      <div className={styles.container}>
+        <Box width="50%">
+          <Typography variant="h4" color="primary" align="center" gutterBottom>
+            Login Page
+          </Typography>
+          <form className={styles.form}>
+            <TextField
+              fullWidth
+              type="email"
+              name="email"
+              placeholder="Email"
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              type="password"
+              name="password"
+              placeholder="Password"
+              margin="normal"
+              variant="outlined"
+            />
+            <Button className={styles.formButton} variant="contained" color="primary">
+              Login
             </Button>
-          </div>
-        </div>
+          </form>
+          <Button
+            className={styles.googleSignInButton}
+            variant="contained"
+            color="secondary"
+            onClick={handleGoogleSignIn}
+          >
+            Sign In with Google
+          </Button>
+        </Box>
       </div>
     </Fragment>
   );

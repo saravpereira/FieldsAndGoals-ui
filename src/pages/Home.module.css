@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form {
+    width: 100%;
+  }
+  
+  .formButton {
+    margin-top: 16px;
+    width: 100%;
+  }
+  
+  .googleSignInButton {
+    margin-top: 16px;
+    width: 100%;
+  }
+  

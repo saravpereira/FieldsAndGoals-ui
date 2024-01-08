@@ -1,11 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import App from "./App";
-import "./App.scss";
+import App from './App';
+import './App.scss';
 
-const el = document.getElementById("app");
+const el = document.getElementById('app');
 
 const root = ReactDOM.createRoot(el);
 

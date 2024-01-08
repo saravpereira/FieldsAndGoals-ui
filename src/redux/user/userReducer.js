@@ -6,56 +6,62 @@ import Parse from 'parse';
 Parse.initialize(process.env.REACT_APP_PARSE_APP_ID);
 Parse.serverURL = process.env.REACT_APP_SERVER_URL;
 
-export const initializeGoogleLoginThunk = createAsyncThunk('user/initializeGoogleLogin', async (_, { dispatch }) => {
+export const initializeGoogleLoginThunk = createAsyncThunk(
+  'user/initializeGoogleLogin',
+  async (_, { dispatch }) => {
     google.accounts.id.initialize({
-        client_id: process.env.REACT_APP_CLIENT_ID,
-        callback: (response) => {
-            const userObject = jwt_decode(response.credential);
-            dispatch(setUser(userObject));
-            Parse.User.logInWith('google', { authData: { id: userObject.sub, access_token: response.credential } })
-                .catch(error => {
-                    toast.error('Error logging in through Google.');
-                });
-        }
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      callback: (response) => {
+        const userObject = jwt_decode(response.credential);
+        dispatch(setUser(userObject));
+        Parse.User.logInWith('google', {
+          authData: { id: userObject.sub, access_token: response.credential },
+        }).catch((error) => {
+          toast.error('Error logging in through Google.');
+        });
+      },
     });
 
-    google.accounts.id.renderButton(
-        document.getElementById("signInDiv"),
-        { theme: "outline", size: "large" }
-    );
+    google.accounts.id.renderButton(document.getElementById('signInDiv'), {
+      theme: 'outline',
+      size: 'large',
+    });
 
     google.accounts.id.prompt();
-});
+  }
+);
 
-export const logoutThunk = createAsyncThunk('user/logout', async (_, { dispatch }) => {
+export const logoutThunk = createAsyncThunk(
+  'user/logout',
+  async (_, { dispatch }) => {
     await Parse.User.logOut();
     dispatch(resetUser());
-});
+  }
+);
 
 const initialState = {
-    auth: {}
+  auth: {},
 };
 
 const userSlice = createSlice({
-    name: 'userReducer',
-    initialState: {...initialState},
-    reducers: {
-        setUser: (state, action) => {
-            return {
-                ...state,
-                auth: action.payload
-            };
-        },
-        resetUser: () => {
-            return {...initialState};
-        }
+  name: 'userReducer',
+  initialState: { ...initialState },
+  reducers: {
+    setUser: (state, action) => {
+      return {
+        ...state,
+        auth: action.payload,
+      };
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(logoutThunk.rejected, (state, action) => {
-                toast.error('Error logging out.');
-            });
-    }
+    resetUser: () => {
+      return { ...initialState };
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logoutThunk.rejected, (state, action) => {
+      toast.error('Error logging out.');
+    });
+  },
 });
 
 export const { setUser, resetUser } = userSlice.actions;
